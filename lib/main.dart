@@ -63,19 +63,19 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Container(
-          height: 200,
-          width: 300,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), color: Colors.blue),
-          child: Center(
-            // child: Text(stringResponse.toString()),
-            child: listResponse == null
-                ? const Text("Loading")
-                : Text(listResponse![0]['first_name'].toString()),
-          ),
-        ),
+      body: ListView.builder(
+        itemBuilder: (context, index) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.network(listResponse![index]['avatar']),
+              ),
+              Text(listResponse![index]["first_name"])
+            ],
+          );
+        },
+        itemCount: listResponse == null ? 0 : listResponse!.length,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
