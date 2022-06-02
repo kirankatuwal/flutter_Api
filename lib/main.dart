@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
 String? stringResponse;
 Map? mapResponse;
 Map? dataResponse;
+List? listResponse;
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key, required this.title}) : super(key: key);
@@ -39,12 +40,13 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   Future apiCall() async {
     http.Response response;
-    response = await http.get(Uri.parse("https://reqres.in/api/users/2"));
+    response = await http.get(Uri.parse("https://reqres.in/api/users?page=2"));
     if (response.statusCode == 200) {
       setState(() {
         // stringResponse = response.body;
         mapResponse = json.decode(response.body);
-        dataResponse = mapResponse!['data'];
+        // dataResponse = mapResponse!['data'];
+        listResponse = mapResponse!['data'];
       });
     }
   }
@@ -69,9 +71,9 @@ class _MyHomePageState extends State<MyHomePage> {
               borderRadius: BorderRadius.circular(20), color: Colors.blue),
           child: Center(
             // child: Text(stringResponse.toString()),
-            child: dataResponse == null
+            child: listResponse == null
                 ? const Text("Loading")
-                : Text(dataResponse!['first_name'].toString()),
+                : Text(listResponse![0]['first_name'].toString()),
           ),
         ),
       ),
